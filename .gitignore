@@ -63,6 +63,6 @@ crashlytics-build.properties
 
 # Ignored Wwise generated soundbanks
 /*_WwiseProject/GeneratedSoundBanks/**/*.bnk
-/BirdGameBuilds
+/[Bb]uild_*
 
 
