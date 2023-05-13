@@ -10,7 +10,7 @@ public class ButtonDemoScript : MonoBehaviour
 
     public void ToggleGreen() 
     {
-        UIManager.current.ToggleActiveContexts("Green");
+        UIManager.current.ToggleActiveContexts("green");
     }
     public void ToggleBlue() 
     {

@@ -70,13 +70,16 @@ namespace UIManagerLibrary.Scripts
             foreach (SerializedPair<string, UIContextObject> sKVP in UIContexts)
             {
                 if (sKVP.Value == null) continue;
-                if (_UIContexts.ContainsKey(sKVP.Key)) //If key already exists then add the value into the existing dictionary list
+
+                string contextKey = UIDataContext.CaseSensitiveContexts ? sKVP.Key : sKVP.Key.ToLower();
+
+                if (_UIContexts.ContainsKey(contextKey)) //If key already exists then add the value into the existing dictionary list
                 {
-                    _UIContexts[sKVP.Key].Add(sKVP.Value);
+                    _UIContexts[contextKey].Add(sKVP.Value);
                 }
                 else //If not then create a whole new object in the dictionary and then assign the current canvas group into that context
                 {
-                    _UIContexts.Add(sKVP.Key, new List<UIContextObject> { sKVP.Value });
+                    _UIContexts.Add(contextKey, new List<UIContextObject> { sKVP.Value });
                 }
             }
         }
@@ -126,6 +129,11 @@ namespace UIManagerLibrary.Scripts
         //Helper methods
         private void SetAllContextsOfType(string context, bool active, bool immediate = false)
         {
+            if (UIDataContext.CaseSensitiveContexts == false)
+            {
+                context = context.ToLower();
+            }
+
             if (_UIContexts.ContainsKey(context) == false)
             {
                 Debug.LogWarning($"Setting Context For: \"{context}\" could not be performed. Have you properly configured this context?");
@@ -140,6 +148,11 @@ namespace UIManagerLibrary.Scripts
 
         private void ToggleAllContextsOfType(string context)
         {
+            if (UIDataContext.CaseSensitiveContexts == false) 
+            {
+                context = context.ToLower();
+            }
+
             if (_UIContexts.ContainsKey(context) == false)
             {
                 Debug.LogWarning($"Toggle Context For: \"{context}\" could not be performed. Have you properly configured this context?");

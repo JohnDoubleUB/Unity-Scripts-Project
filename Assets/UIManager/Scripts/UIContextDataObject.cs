@@ -5,4 +5,5 @@ using UnityEngine;
 public class UIContextDataObject : ScriptableObject
 {
     public string[] Contexts;
+    public bool CaseSensitiveContexts = false; //This is incase you want your contexts to be case sensitive, defaults to off
 }
