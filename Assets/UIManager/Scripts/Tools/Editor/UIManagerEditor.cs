@@ -14,7 +14,7 @@ namespace UIManagerLibrary.Scripts
             {
                 string[] contexts = contextData.GetContexts();
                 
-                if (contexts.Length > 0)
+                if (contexts != null && contexts.Length > 0) //This could be null
                 {
                     uiManager._activeFlags = EditorGUILayout.MaskField("Enable Contexts On Startup", uiManager._activeFlags, contexts);
                 }
