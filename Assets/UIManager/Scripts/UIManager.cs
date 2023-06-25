@@ -12,7 +12,7 @@ namespace UIManagerLibrary.Scripts
         public static UIManager current;
 
         [SerializeField]
-        private bool CaseSensitiveContexts = true;
+        private bool CaseSensitiveContexts = true; //Should not be changed once initialized
 
         [SerializeField]
         private bool AssignAsCurrentSingleton = true; //Incase we just want to use a UIManager for a specific thing
