@@ -15,11 +15,11 @@ namespace UIManagerLibrary.Scripts
         private bool AssignAsCurrentSingleton = true; //Incase we just want to use a UIManager for a specific thing
 
         //Use one or the other!
-        [Header("Contexts - Use one or the other, not both")]
+        [Header("Data Contexts - Use one or the other, not both")]
         public UIContextDataObject UIDataContextObject; //This is used mainly for defining enum for initially active contexts as well
         public UIContextData UIDataContext; //This is for defining it entirely within the inspector without a separate context
         private bool ContextIsCaseSensitive => UIDataContextObject != null ? UIDataContextObject.CaseSensitiveContexts : UIDataContext.CaseSensitiveContexts;
-
+        [Header("UIContext Objects - Drag and drop ui elements with UIContexts")]
         public List<SerializedPair<string, UIContextObject>> UIContexts = new List<SerializedPair<string, UIContextObject>>();
 
         private Dictionary<string, List<UIContextObject>> _UIContexts = new Dictionary<string, List<UIContextObject>>();
