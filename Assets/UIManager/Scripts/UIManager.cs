@@ -11,7 +11,11 @@ namespace UIManagerLibrary.Scripts
 
         public static UIManager current;
 
-        public UIContextDataObject UIDataContext;
+        [SerializeField]
+        private bool CaseSensitiveContexts = true;
+
+        [SerializeField]
+        private bool AssignAsCurrentSingleton = true; //Incase we just want to use a UIManager for a specific thing
 
         public List<SerializedPair<string, UIContextObject>> UIContexts = new List<SerializedPair<string, UIContextObject>>();
 
@@ -21,6 +25,7 @@ namespace UIManagerLibrary.Scripts
 
         private void Awake()
         {
+            if (AssignAsCurrentSingleton == false) return;
             if (current != null) Debug.LogWarning("Oops! it looks like there might already be a " + GetType().Name + " in this scene!");
             current = this;
         }
@@ -71,7 +76,7 @@ namespace UIManagerLibrary.Scripts
             {
                 if (sKVP.Value == null) continue;
 
-                string contextKey = UIDataContext.CaseSensitiveContexts ? sKVP.Key : sKVP.Key.ToLower();
+                string contextKey = CaseSensitiveContexts ? sKVP.Key : sKVP.Key.ToLower();
 
                 if (_UIContexts.ContainsKey(contextKey)) //If key already exists then add the value into the existing dictionary list
                 {
@@ -129,7 +134,7 @@ namespace UIManagerLibrary.Scripts
         //Helper methods
         private void SetAllContextsOfType(string context, bool active, bool immediate = false)
         {
-            if (UIDataContext.CaseSensitiveContexts == false)
+            if (CaseSensitiveContexts == false)
             {
                 context = context.ToLower();
             }
@@ -148,7 +153,7 @@ namespace UIManagerLibrary.Scripts
 
         private void ToggleAllContextsOfType(string context)
         {
-            if (UIDataContext.CaseSensitiveContexts == false) 
+            if (CaseSensitiveContexts == false) 
             {
                 context = context.ToLower();
             }
