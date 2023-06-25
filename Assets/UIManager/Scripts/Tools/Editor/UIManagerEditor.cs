@@ -10,12 +10,14 @@ namespace UIManagerLibrary.Scripts
             var uiManager = target as UIManager;
             bool componentIsDirty = false;
 
-            if (uiManager.UIDataContext != null && uiManager.UIDataContext.Contexts.Length > 0)
+            if (uiManager.TryGetUIContextData(out IUIContextData contextData))
             {
-                string[] contexts = uiManager.UIDataContext.Contexts;
-                uiManager._activeFlags = EditorGUILayout.MaskField("Enable Contexts On Startup", uiManager._activeFlags, contexts);
-
-
+                string[] contexts = contextData.GetContexts();
+                
+                if (contexts.Length > 0)
+                {
+                    uiManager._activeFlags = EditorGUILayout.MaskField("Enable Contexts On Startup", uiManager._activeFlags, contexts);
+                }
             }
 
             // Draw the default inspector
