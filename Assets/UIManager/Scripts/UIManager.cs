@@ -28,6 +28,7 @@ namespace UIManagerLibrary.Scripts
 
         private void Awake()
         {
+            if (AssignAsCurrentSingleton == false) return;
             if (current != null) Debug.LogWarning("Oops! it looks like there might already be a " + GetType().Name + " in this scene!");
             current = this;
         }
