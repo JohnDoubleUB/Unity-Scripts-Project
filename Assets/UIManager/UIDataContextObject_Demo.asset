@@ -14,7 +14,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   Contexts:
   - Red
-  - Green
   - Blue
   - Purple
   - Brown
