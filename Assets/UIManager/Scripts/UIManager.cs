@@ -20,6 +20,8 @@ namespace UIManagerLibrary.Scripts
         public UIContextDataObject UIDataContextObject; //This is used mainly for defining enum for initially active contexts as well
         public UIContextData UIDataContext; //This is for defining it entirely within the inspector without a separate context
         private bool ContextIsCaseSensitive => UIDataContextObject != null ? UIDataContextObject.CaseSensitiveContexts : UIDataContext.CaseSensitiveContexts;
+        private string[] Contexts => UIDataContextObject != null ? UIDataContextObject.Contexts : UIDataContext.Contexts;
+
         [Header("UIContext Objects - Drag and drop ui elements with UIContexts")]
         public List<SerializedPair<string, UIContextObject>> UIContexts = new List<SerializedPair<string, UIContextObject>>();
 
@@ -69,11 +71,30 @@ namespace UIManagerLibrary.Scripts
         //Helper methods
         private void _InitializeContexts()
         {
-            foreach (var (kVP, i) in _UIContexts.Select((value, i) => (value, i)))
+            //This doesn't work
+            //foreach (var (kVP, i) in _UIContexts.Select((value, i) => (value, i)))
+            //{
+            //    int bitMask = 1 << i;
+            //    bool contextEnabled = (_activeFlags & bitMask) != 0;
+            //    foreach (UIContextObject contextObject in kVP.Value) contextObject.SetDisplayAndActive(contextEnabled, true);
+            //}
+
+            for (int i = 0; i < Contexts.Length; i++)
             {
+                string contextName = ContextIsCaseSensitive ? Contexts[i] : Contexts[i].ToLower();
                 int bitMask = 1 << i;
                 bool contextEnabled = (_activeFlags & bitMask) != 0;
-                foreach (UIContextObject contextObject in kVP.Value) contextObject.SetDisplayAndActive(contextEnabled, true);
+
+
+                if (!_UIContexts.TryGetValue(contextName, out List<UIContextObject> contextObjects))
+                {
+                    continue;
+                }
+
+                foreach (UIContextObject contextObject in contextObjects)
+                {
+                    contextObject.SetDisplayAndActive(contextEnabled, true);
+                }
             }
 
             firstTimeSet = true;
